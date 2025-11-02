@@ -1,6 +1,6 @@
-from Usuarios import CrearCuenta,IniciarSesion
+from Usuarios import CrearCuenta,IniciarSesion,VerificarRoleDeUsuario
 from funciones_cine import CargarSucursales
-
+from AdminsSettings import CambiarRoles
 
 def menuprincipal():
     while True:
@@ -38,13 +38,13 @@ def MenuUser(Usuario):
                 raise ValueError
         except ValueError:
             print("ingrese Un numero que este en las opciones")
-        else:                    
-            if op == 1:
-                ReservaDeButacas()#hay que seleccionar la sala 
-            if op == 2:                
-                EnviarMensajeAAC(Usuario)
-            if op == 3:                
-                break
+        # else:                    
+        #     if op == 1:
+        #         ReservaDeButacas()#hay que seleccionar la sala 
+        #     if op == 2:                
+        #         EnviarMensajeAAC(Usuario)
+        #     if op == 3:                
+        #         break
     return
 
 
@@ -57,24 +57,24 @@ def MenuAdmin(Usuario):
                 raise ValueError
         except ValueError:
             print("ingrese Un numero que este en las opciones")
-        else:
-            if op == 1:
-                SolicitudDeDesbloqueo()
-            if op == 2:
-                RevisarStock()
-            if op == 3:
-                CambiarPreciosDelCandy()
-            #if op == 4:
-                #VerDatos()
-            if op == 5:
-                break
+        # else:
+        #     if op == 1:
+        #         SolicitudDeDesbloqueo()
+        #     if op == 2:
+        #         RevisarStock()
+        #     if op == 3:
+        #         CambiarPreciosDelCandy()
+        #     #if op == 4:
+        #         #VerDatos()
+        #     if op == 5:
+        #         break
     
 
 def MenuSuperAdmin(Usuario):
     while True:
-        print("1. cambiar roles de usuarios \n 2. Simular Datos \n 3. cerrar sesion")
+        print("1. cambiar roles de usuarios \n2. Simular Datos \n3. cerrar sesion")
         try:
-            op=int(input("seleccione la opcion que quiere"))
+            op=int(input("seleccione la opcion que quiere: "))
             if op < 1 and op >2:
                 raise ValueError
         except ValueError:
@@ -82,8 +82,8 @@ def MenuSuperAdmin(Usuario):
         else:    
             if op == 1:
                 CambiarRoles()
-            if op == 2:
-                SimularDatos()
+            # if op == 2:
+            #     SimularDatos()
             if op == 3:
                 break
     return
