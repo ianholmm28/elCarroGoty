@@ -1,5 +1,5 @@
-from logs import log
-from gestionDeDatos import reinicioDeContraseña
+
+from gestionDeDatos import SeguridadDeContraseña
 def CrearCuenta():#este es para exportar la cuenta creada a el archivo
     arch=open("cuentas.cvs",mode="at")
     Usuario=NombreDeusuario()
@@ -111,51 +111,6 @@ def NombreDeusuario():#este es para verificar de que el nombre de usuario este d
     arch.close()
     return Usuario
     
-def SeguridadDeContraseña():
-    while True:
-        Contraseña=input("ingrese la contraseña:")
-        try:
-            if len(Contraseña)<8:
-                raise IndexError
-        except IndexError:
-            print("la Contraseña es demasiado corta")
-            continue
-        else:
-            try:
-                SimbolosEspeciales=["@", "!", "?", "#", "$", "¿", "¡", "&", "%", "(", ")", "=",".",",",";",":"]
-                Comprobacion={"Simbolos Especiales":False,"Numeros":False,"Letras":False,"Mayusculas":False}
-                for Caracter in range(len(Contraseña)):
-                    aux=Contraseña[Caracter]
-                    
-                    if aux in SimbolosEspeciales:
-                        Comprobacion["Simbolos Especiales"]=True
-                    if aux.isdigit() == True:
-                        Comprobacion["Numeros"]=True
-
-                    if aux.isalpha() == True:
-                        Comprobacion["Letras"]=True
-
-                    if aux.isupper() == True:
-                        Comprobacion["Mayusculas"]=True
-                
-                ErrorCount=0
-                for Claves in Comprobacion:    
-                    if Comprobacion[Claves] == False:
-                        if ErrorCount==1:
-                            Falta+=(f",{Claves}")
-                        else:
-                            Falta=(f"{Claves}")
-                            ErrorCount=1
-                    
-                if ErrorCount == 1:
-                    raise ValueError
-            
-            except ValueError:
-                print(f"la contraseña no es suficientemente segura le faltan {Falta}")
-            else:
-                print("la contraseña es segura")
-                break
-    return Contraseña
 
 def ComprobacionDeDniYFecha(Opcion):
     if Opcion == 1:
