@@ -12,7 +12,7 @@ def estaEntre(minimo,maximo,mensaje):
 def validarString(opciones, mensaje):
     while True:
         try:
-            texto = input(mensaje)
+            texto = input(mensaje).lower().strip()
             if texto not in opciones:
                 raise ValueError
             break
