@@ -14,7 +14,7 @@ def log (FFuncion, Typ0, Usuario):
 
 def EnviarMensajeAAC(Opcion):
 
-    with open("Mensajes/Solicitudes.cvs",mode="at") as Arch:
+    with open("Mensajes/Solicitudes.csv",mode="at") as Arch:
 
         print("bienvenido a atencion al cliente")
         print("ingrese el tipo de mensaje que quiere enviar")
@@ -32,7 +32,7 @@ def EnviarMensajeAAC(Opcion):
 
 
 def SolicitudDeDesbloqueo():
-    arch=open("Mensajes/Solicitudes.cvs",mode="at")
+    arch=open("Mensajes/Solicitudes.csv",mode="at")
     for lineas in arch:
         print(lineas)
         

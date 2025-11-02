@@ -1,6 +1,8 @@
-from gestionDeDatos import reinicioDeContraseña
+from gestionDeDatos import reinicioDeContraseña,SeguridadDeContraseña
+
+
 def CrearCuenta():#este es para exportar la cuenta creada a el archivo
-    arch=open("cuentas.cvs",mode="at")
+    arch=open("cuentas.csv",mode="at")
     Usuario=NombreDeusuario()
     Contraseña=SeguridadDeContraseña()
     Documento=ComprobacionDeDniYFecha(1)
@@ -85,7 +87,7 @@ def VerificacionDeContraseña(Cuenta,Contraseña):#este va con el de Inicio de s
     return TorF
 
 def NombreDeusuario():#este es para verificar de que el nombre de usuario este disponible
-    arch=open("cuentas.cvs",mode="rt")
+    arch=open("cuentas.csv",mode="rt")
     while True:
         print("el nombre de usuario tiene que tener mas de 8 caracteres")
         try:
@@ -94,7 +96,7 @@ def NombreDeusuario():#este es para verificar de que el nombre de usuario este d
                 raise IndexError
             else:
                 for linea in arch:
-                    AuxUsuario=linea.strip().split("/")
+                    AuxUsuario=linea.strip().split(";")
                     if AuxUsuario[0] == Usuario:
                         ValueError
         except IndexError:
@@ -107,51 +109,7 @@ def NombreDeusuario():#este es para verificar de que el nombre de usuario este d
     arch.close()
     return Usuario
     
-def SeguridadDeContraseña():
-    while True:
-        Contraseña=input("ingrese la contraseña:")
-        try:
-            if len(Contraseña)<8:
-                raise IndexError
-        except IndexError:
-            print("la Contraseña es demasiado corta")
-            continue
-        else:
-            try:
-                SimbolosEspeciales=["@", "!", "?", "#", "$", "¿", "¡", "&", "%", "(", ")", "=",".",",",";",":"]
-                Comprobacion={"Simbolos Especiales":False,"Numeros":False,"Letras":False,"Mayusculas":False}
-                for Caracter in range(len(Contraseña)):
-                    aux=Contraseña[Caracter]
-                    
-                    if aux in SimbolosEspeciales:
-                        Comprobacion["Simbolos Especiales"]=True
-                    if aux.isdigit() == True:
-                        Comprobacion["Numeros"]=True
 
-                    if aux.isalpha() == True:
-                        Comprobacion["Letras"]=True
-
-                    if aux.isupper() == True:
-                        Comprobacion["Mayusculas"]=True
-                
-                ErrorCount=0
-                for Claves in Comprobacion:    
-                    if Comprobacion[Claves] == False:
-                        if ErrorCount==1:
-                            Falta+=(f",{Claves}")
-                        else:
-                            Falta=(f"{Claves}")
-                            ErrorCount=1
-                    
-                if ErrorCount == 1:
-                    raise ValueError
-            
-            except ValueError:
-                print(f"la contraseña no es suficientemente segura le faltan {Falta}")
-            else:
-                print("la contraseña es segura")
-                break
-    return Contraseña
 
 def ComprobacionDeDniYFecha(Opcion):
     if Opcion == 1:
@@ -189,15 +147,41 @@ def ComprobacionDeDniYFecha(Opcion):
         return fecha
 
 def EncontrarUsuario(Info):
-        arch=open("cuentas.cvs",mode="rt")
-        Cuenta=False
-
-        for linea in arch:
-            CuentaAux = linea.strip().split("/")
-        
-            if Info == CuentaAux[0]:
-                Cuenta = CuentaAux
-        
-        arch.close()
+    try:
+        with open("cuentas.csv",mode="rt") as arch:
+            Cuenta=False
+            for linea in arch:
+                cuentas = linea.strip().split(";")
+                if Info == cuentas[0]:
+                    Cuenta = cuentas
+                    arch.close()
+                    return Cuenta
+            if Cuenta == False:
+                raise ValueError
+    except ValueError:
+        print("ese usuario no existe")
         return Cuenta
 
+
+def traerUsuarios():
+    try:
+        with open("cuentas.csv", "r") as archivo:
+            usuarios = []
+            for lineas in archivo:
+                usuarios.append( lineas.strip().split(";"))
+        return usuarios
+    except IOError:
+        print("Hubo un problema con el archivo cuentas.csv")
+        
+def imprimirUsuarios(usuario):
+    usuarios = traerUsuarios()
+    print("-"*30)
+    print("USUARIOS: ")
+    print("-"*30)
+    for user in usuarios:
+        posicion = usuarios.index(user)
+        print(f"{posicion}. {user[0]}- Rol: {user[-1]}")
+    print("-"*30)
+    
+    eleccion = int(input(f"{usuario[0]}: "))
+    return usuarios[eleccion]

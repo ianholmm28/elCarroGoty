@@ -7,7 +7,7 @@ def estaEntre(minimo,maximo,mensaje):
             break
         except ValueError:
             print("Dato invalido. Intentelo de nuevo.")
-    return
+    return num
 
 def validarString(opciones, mensaje):
     while True:
@@ -19,3 +19,12 @@ def validarString(opciones, mensaje):
         except ValueError:
             print("Dato invalido. Intentelo de nuevo.")
     return
+
+def validarLista(lista):
+    print("-"*30)
+    for elemento in lista:
+        posicion = lista.index(elemento)
+        print(f"{posicion}.{elemento}")
+    print("-"*30)
+    eleccion = estaEntre(0,len(lista), "Elija una opcion: ")
+    return lista[eleccion]
