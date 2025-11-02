@@ -7,7 +7,7 @@ def estaEntre(minimo,maximo,mensaje):
             break
         except ValueError:
             print("Dato invalido. Intentelo de nuevo.")
-    return
+    return num
 
 def validarString(opciones, mensaje):
     while True:
@@ -18,4 +18,4 @@ def validarString(opciones, mensaje):
             break
         except ValueError:
             print("Dato invalido. Intentelo de nuevo.")
-    return
+    return texto
